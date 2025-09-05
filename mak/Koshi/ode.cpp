@@ -223,29 +223,34 @@ void rungeKuttaStep(float& x, float h, float y[]) {
 }
 
 void plotHyperbola() {
-    // Массивы для точек
     float x[maxX], y[maxX];
 
     for (int i = 0; i < maxX; ++i) {
         x[i] = i + 1;
         y[i] = 1.0f / (i + 1);
     }
+
     Dislin d;
     d.metafl("XWIN");
     d.disini();
-    d.disini();                  // Инициализация графики
-    d.pagera();                  // Автоматический размер страницы
-    d.complx();                  // Линейный стиль графика
+    d.pagera();
+    d.complx();
 
     d.name("X", "X");
     d.name("Y", "Y");
     d.titlin("График гиперболы y=1/x", 1);
 
-    // Настройка осей: X от 1 до maxX, шаг 1; Y от 0 до 1, шаг 0.1
-    d.graf(1.0, float(maxX), 1.0, 1.0, 0.0, 1.0, 0.0, 0.1);
+    // Уменьшаем количество подписей по оси X
+    float xStart = 1.0f;
+    float xEnd = float(maxX);
+    float xStep = 10.0f;  // Увеличиваем шаг по X
+
+	d.height(35); // Размер шрифта
+
+    d.graf(xStart, xEnd, xStart, xStep, 0.0, 1.0, 0.0, 0.1);
 
     d.color("BLUE");
     d.curve(x, y, maxX);
 
-    d.disfin();                  // Завершение работы с графикой
+    d.disfin();
 }
